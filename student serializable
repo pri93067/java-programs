@@ -1,0 +1,47 @@
+import java.util.*;
+import java.io.*;
+class Employee implements Serializable{//Serializable and Cloneable are marker or tag interface
+	int eid;
+	String name;
+	float sal;
+	Employee(String name,int eid,float sal){
+		this.name = name;
+		this.eid = eid;
+		this.sal = sal;
+	}
+	public String toString(){
+		return "Employee Name : "+name+" Employee ID : "+eid+" Salary : "+sal;
+	}
+}
+class MainEmployee{
+	public static void main(String... args)throws IOException,ClassNotFoundException{
+		List<Employee> lis = new LinkedList<Employee>();
+		Employee e1 = new Employee("Arun Kumar",202022,5600.54f);
+		Employee e2 = new Employee("Subham",202021,6500.67f);
+		Employee e3 = new Employee("Chandini",202020,5800.56f);
+		lis.add(e1);//Collections we store objects
+		lis.add(e2);
+		lis.add(e3);
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\anudip batch details\\Lab session\\emp.txt"));
+		oos.writeObject(lis);
+		oos.close();
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:\\anudip batch details\\Lab session\\emp.txt"));
+		LinkedList<Employee> lis1 = (LinkedList<Employee>)ois.readObject();
+		for(Employee x:lis1){
+			System.out.println(x);
+		}
+		//
+		/*FileOutputStream fis1 = new FileOutputStream("E:\\anudip batch details\\Lab session\\arun.txt");
+		DataInputStream dis = new DataInputStream(System.in);
+		char ch;
+		while((ch = (char)dis.read())!='a'){
+			fis1.write(ch);
+		}
+		dis.close();
+		fis1.close();*/
+		LinkedList<Employee> lis4 = (LinkedList<Employee>)lis1.clone();
+		for(Employee x:lis1){
+			System.out.println(x);
+		}
+	}
+}
